@@ -8,7 +8,7 @@ services:
       - ./.env
 
   backend:
-    image: niktigerbill/foodgram-project
+    image: mrzoom007/foodgram-project
     restart: always
     volumes:
       - static_value:/code/static/
@@ -19,7 +19,7 @@ services:
       - ./.env
 
   frontend:
-    image: niktigerbill/foodgram_frontend
+    image: mrzoom007/foodgram_frontend
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
