@@ -93,9 +93,9 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     needs:
-      - copy_files_to_server
       - build_push_backend_to_DockerHub
       - build_push_frontend_to_DockerHub
+      - build_gateway_and_push_to_docker_hub
     steps:
     - name: remote ssh commands to deploy
       uses: appleboy/ssh-action@master
