@@ -16,7 +16,7 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.DB_USER }}
-        privateKey: ${{ secrets.PRIVATE_KEY }}
+        privateKey: ${{ secrets.SSH_KEY }}
         command: cd projects && mkdir -p foodgram && mkdir -p foodgram/docs
 
     - name: Copy infra files
@@ -26,7 +26,7 @@ jobs:
           remote: /${{ secrets.DB_USER }}/projects/foodgram/
           host: ${{ secrets.HOST }}
           username: ${{ secrets.DB_USER }}
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          privateKey: ${{ secrets.SSH_KEY }}
 
     - name: Copy docs
       uses: mrzoom007/github-action-scp@release
@@ -35,7 +35,7 @@ jobs:
           remote: /${{ secrets.DB_USER }}/projects/foodgram/docs/
           host: ${{ secrets.HOST }}
           username: ${{ secrets.DB_USER }}
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          privateKey: ${{ secrets.SSH_KEY }}
 
   build_push_backend_to_DockerHub:
     name: Building back image and pushing it to Docker Hub
