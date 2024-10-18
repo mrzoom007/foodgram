@@ -1,0 +1,19 @@
+name: testing scp
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_yml:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: copying docker-compose.yml
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          source: docker-compose.production.yml
+          target: foodgram
