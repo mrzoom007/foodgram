@@ -5,7 +5,7 @@ services:
   frontend:
     container_name: foodgram-front
     image: mrzoom007/foodgram_front:latest
-    build: ../frontend
+    build: ./frontend
     volumes:
       - ./frontend/:/app/result_build/
 
@@ -16,18 +16,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ../.env
+      - ./.env
 
   backend:
     container_name: foodgram-app
     image: mrzoom007/foodgram_back:latest
-    build: ../backend
+    build: ./backend
     restart: always
     volumes:
       - static_dir:/app/static/
       - media_dir:/app/media/
     env_file:
-      - ../.env
+      - ./.env
 
   nginx:
     container_name: foodgram-proxy
