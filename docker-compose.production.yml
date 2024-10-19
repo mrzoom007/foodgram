@@ -2,13 +2,11 @@ version: '3.3'
 services:
 
   db:
-    container_name: foodgram-db
-    image: postgres:13.0-alpine
-    restart: always
+    image: postgres:13.10
+    env_file: .env
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env
+      - pg_data:/var/lib/postgresql/data
+    restart: always
 
   backend:
     container_name: foodgram-app
