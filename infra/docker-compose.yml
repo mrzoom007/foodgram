@@ -2,24 +2,22 @@ version: '3.3'
 services:
 
   db:
-    container_name: foodgram-db
-    image: postgres:13.0-alpine
-    restart: always
+    image: postgres:13.10
+    env_file: .env
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env
+      - pg_data:/var/lib/postgresql/data
+    restart: always
 
   backend:
     container_name: foodgram-app
     image: mrzoom007/foodgram_back:latest
-    build: ./backend
-    restart: always
+    env_file: .env
+    depends_on:
+      - db
     volumes:
-      - static_dir:/app/static/
-      - media_dir:/app/media/
-    env_file:
-      - ./.env
+      - static:/backend_static
+      - media:/app/media
+    restart: always
 
   frontend:
     image: mrzoom007/foodgram_front:latest
