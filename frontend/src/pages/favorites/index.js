@@ -22,7 +22,7 @@ const Favorites = ({ updateOrders }) => {
   
   const getRecipes = ({ page = 1, tags }) => {
     api
-      .getRecipes({ page, is_favorited: true, tags })
+      .getRecipes({ page, is_favorited: Number(true), tags })
       .then(res => {
         const { results, count } = res
         setRecipes(results)
@@ -46,14 +46,20 @@ const Favorites = ({ updateOrders }) => {
     <Container>
       <MetaTags>
         <title>Избранное</title>
-        <meta name="description" content="Продуктовый помощник - Избранное" />
+        <meta name="description" content="Фудграм - Избранное" />
         <meta property="og:title" content="Избранное" />
       </MetaTags>
       <div className={styles.title}>
         <Title title='Избранное' />
-        <CheckboxGroup values={tagsValue} handleChange={handleTagsChange} />
+        <CheckboxGroup
+          values={tagsValue}
+          handleChange={value => {
+            setRecipesPage(1)
+            handleTagsChange(value)
+          }}
+        />
       </div>
-      <CardList>
+      {recipes.length > 0 && <CardList>
         {recipes.map(card => <Card
           {...card}
           key={card.id}
@@ -61,10 +67,11 @@ const Favorites = ({ updateOrders }) => {
           handleLike={handleLike}
           handleAddToCart={handleAddToCart}
         />)}
-      </CardList>
+      </CardList>}
       <Pagination
         count={recipesCount}
         limit={6}
+        page={recipesPage}
         onPageChange={page => setRecipesPage(page)}
       />
     </Container>

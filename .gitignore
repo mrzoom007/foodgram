@@ -1,3 +1,7 @@
+frontend/node_modules
+infra/frontend/build
+.env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -104,6 +108,8 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.venv/
+.env/
 env/
 venv/
 ENV/
@@ -130,9 +136,7 @@ dmypy.json
 
 # .idea
 .idea
+.vscode
 
 static/
-posts/static/
 media/
-media_value/
-static_value/

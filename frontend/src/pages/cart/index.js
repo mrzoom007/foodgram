@@ -17,7 +17,7 @@ const Cart = ({ updateOrders, orders }) => {
       .getRecipes({
         page: 1,
         limit: 999,
-        is_in_shopping_cart: true
+        is_in_shopping_cart: Number(true)
       })
       .then(res => {
         const { results } = res
@@ -37,7 +37,7 @@ const Cart = ({ updateOrders, orders }) => {
     <Container className={styles.container}>
       <MetaTags>
         <title>Список покупок</title>
-        <meta name="description" content="Продуктовый помощник - Список покупок" />
+        <meta name="description" content="Фудграм - Список покупок" />
         <meta property="og:title" content="Список покупок" />
       </MetaTags>
       <div className={styles.cart}>
@@ -48,7 +48,7 @@ const Cart = ({ updateOrders, orders }) => {
           updateOrders={updateOrders}
         />
         {orders > 0 && <Button
-          modifier='style_dark-blue'
+          modifier='style_dark'
           clickHandler={downloadDocument}
         >Скачать список</Button>}
       </div>
