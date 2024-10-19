@@ -1,4 +1,3 @@
----
 version: '3.3'
 services:
 
@@ -43,9 +42,3 @@ services:
       - static:/static/
       - media:/app/media
     restart: always
-
-volumes:
-  static_dir:
-  media_dir:
-  postgres_data:
-...
