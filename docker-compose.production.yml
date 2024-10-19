@@ -13,13 +13,13 @@ services:
   backend:
     container_name: foodgram-app
     image: mrzoom007/foodgram_back:latest
-    build: ./backend
-    restart: always
+    env_file: .env
+    depends_on:
+      - db
     volumes:
-      - static_dir:/app/static/
-      - media_dir:/app/media/
-    env_file:
-      - ./.env
+      - static:/backend_static
+      - media:/app/media
+    restart: always
 
   frontend:
     image: mrzoom007/foodgram_front:latest
