@@ -29,7 +29,7 @@ class UserCreateSerializer(DjoserUserCreateSerializer):
             regex=r'^[\w.@+-]+$',
             message='Username contains restricted symbols. Please use only '
                     'letters, numbers and .@+- symbols',
-        ),],
+        ), ],
         max_length=NAME_LENGTH)
 
     class Meta:
