@@ -17,7 +17,7 @@ services:
       - db
     volumes:
       - static:/backend_static
-      - media:/app/media
+      - media:/app/media/
     restart: always
   frontend:
     image: mrzoom007/foodgram_frontend
@@ -36,6 +36,7 @@ services:
     ports:
       - 8002:80
     volumes:
-      - static:/static/
-      - media:/app/media
+      - static:/var/html/static/
+      - media:/var/html/media/
+      - ../frontend/build:/usr/share/nginx/html/
     restart: always
