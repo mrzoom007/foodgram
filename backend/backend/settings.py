@@ -16,7 +16,8 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS',
                           default='127.0.0.1,localhost').split(',')
 
 INSTALLED_APPS = [
-    'recipes.apps.RecipesConfig',
+    'recipes',
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,22 +67,22 @@ if os.getenv('USE_SQLITE'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.getenv('DB_NAME', 'db.sqlite3'),
+            'NAME': os.getenv('POSTGRES_DB', 'db.sqlite3'),
         }
     }
 else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', 'django'),
-            'USER': os.getenv('DB_USER', 'django'),
-            'PASSWORD': os.getenv('DB_PASSWORD', ''),
+            'NAME': os.getenv('POSTGRES_DB', 'django'),
+            'USER': os.getenv('POSTGRES_USER', 'django'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
             'HOST': os.getenv('DB_HOST', ''),
             'PORT': os.getenv('DB_PORT', 5432)
         }
     }
 
-AUTH_USER_MODEL = 'recipes.User'
+AUTH_USER_MODEL = 'users.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -126,6 +127,11 @@ DJOSER = {
         'user': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
         'user_list': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
     },
+    "SERIALIZERS": {
+        "user": "api.serializers.UserSerializer",
+        "user_create": "api.serializers.UserCreateSerializer",
+        "current_user": "api.serializers.UserSerializer",
+    },
 }
 
 REST_FRAMEWORK = {
@@ -135,7 +141,4 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 6,
 }
