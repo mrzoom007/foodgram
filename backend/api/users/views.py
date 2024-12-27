@@ -1,9 +1,7 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import (
-    SAFE_METHODS, IsAuthenticated, IsAuthenticatedOrReadOnly
-)
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from djoser.views import UserViewSet as DjoserViewSet
 
@@ -53,7 +51,7 @@ class UserViewSet(DjoserViewSet):
             return Response({
                 'errors': 'Вы не можете отписываться от самого себя'
             }, status=status.HTTP_400_BAD_REQUEST)
-        follow = Follow.objects.filter(subscriber=user, user=author)
+        follow = get_object_or_404(Follow, subscriber=user, user=author)
         if follow.exists():
             follow.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)

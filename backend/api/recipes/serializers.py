@@ -3,9 +3,9 @@ from drf_extra_fields.fields import Base64ImageField
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 
-from backend.constants import (
+from recipes.constants import (
     MAX_COOKING_TIME, MAX_INGREDIENTS,
-    MIN_COOKING_TIME, MIN_INGREDIENTS, NAME_LENGTH)
+    MIN_COOKING_TIME, MIN_INGREDIENTS)
 from recipes.models import (
     Ingredient, IngredientInRecipe, Recipe, ShoppingList, Tag, Favorite
 )
@@ -93,12 +93,14 @@ class RecipeWriteSerializer(RecipeGetSerializer):
                                               many=True)
 
     def validate(self, data):
-        data = super().validate(data)
+        super().validate(data)
+
         request = self.context['request']
         get_tags = request.data.get('tags')
+
         if not get_tags:
-            raise serializers.ValidationError(
-                {'tags': ['Обязательное поле.']})
+            raise serializers.ValidationError({'tags': ['Обязательное поле.']})
+
         tags_data = set()
         for tag_data in get_tags:
             try:
@@ -109,11 +111,13 @@ class RecipeWriteSerializer(RecipeGetSerializer):
                 tags_data.add(tag)
             except Tag.DoesNotExist:
                 raise serializers.ValidationError(
-                    {'Tag': ['Такого тэга нет.']})
+                    {'tags': ['Такого тэга нет.']})
+
         get_ingredients = request.data.get('ingredients')
         if not get_ingredients:
             raise serializers.ValidationError(
                 {'ingredients': ['Обязательное поле.']})
+
         ingredients_set = set()
         for ingredient in get_ingredients:
             if ingredient['id'] in ingredients_set:
@@ -125,6 +129,7 @@ class RecipeWriteSerializer(RecipeGetSerializer):
             except Ingredient.DoesNotExist:
                 raise serializers.ValidationError(
                     {'ingredients': ['Такого ингредиента нет.']})
+
         return data
 
     def validate_image(self, value):

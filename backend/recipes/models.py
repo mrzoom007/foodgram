@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import UniqueConstraint
 
-from backend.constants import (
+from recipes.constants import (
     INGREDIENT_LENGTH, MAX_COOKING_TIME, MAX_INGREDIENTS,
     MEASURMENT_LENGTH, MIN_COOKING_TIME, MIN_INGREDIENTS,
     RECIPE_LENGTH, SLUG_LENGTH, TAG_LENGTH
@@ -57,7 +57,6 @@ class Tag(models.Model):
 class Recipe(models.Model):
     author = models.ForeignKey(
         User,
-        related_name='recipe',
         on_delete=models.CASCADE,
         verbose_name='Автор рецепта',
     )
@@ -86,14 +85,10 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient,
         through='IngredientInRecipe',
-        related_name='recipes',
         verbose_name='Ингредиенты',
-
     )
-
     tags = models.ManyToManyField(
         Tag,
-        related_name='tag_recipes',
         verbose_name='Тэги'
     )
     pub_date = models.DateTimeField(
@@ -105,6 +100,7 @@ class Recipe(models.Model):
         ordering = ('-pub_date',)
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
+        default_related_name = 'recipes'
 
     def __str__(self):
         return self.name

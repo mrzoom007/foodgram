@@ -1,17 +1,11 @@
 from django.contrib.auth import hashers
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import CheckConstraint, UniqueConstraint
 from django.utils.translation import gettext_lazy
-from rest_framework.exceptions import ValidationError
 
-from backend.constants import (EMAIL_LENGTH, NAME_LENGTH, ROLE_LENGTH)
-
-
-def user_validator(value):
-    if value == 'me':
-        raise ValidationError('Неверный логин')
+from users.constants import (EMAIL_LENGTH, NAME_LENGTH, ROLE_LENGTH)
+from users.validators import combined_username_validator
 
 
 class User(AbstractUser):
@@ -30,10 +24,7 @@ class User(AbstractUser):
         'Логин',
         max_length=NAME_LENGTH,
         unique=True,
-        validators=[RegexValidator(
-            regex=r'^[\w.@+-]+$',
-            message='Ошибка валидации'
-        )],
+        validators=[combined_username_validator],
     )
     first_name = models.CharField(
         'Имя',
@@ -121,7 +112,3 @@ class Follow(models.Model):
 
     def __str__(self):
         return f'{self.subscriber} подписан на {self.user}'
-
-    def clean(self):
-        if self.user == self.subscriber:
-            raise ValidationError('Нельзя подписаться на себя')

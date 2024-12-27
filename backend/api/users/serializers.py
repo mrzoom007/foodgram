@@ -7,9 +7,7 @@ from djoser.serializers import (
     UserSerializer as DjoserUserSerializer,
     UserCreateSerializer as DjoserUserCreateSerializer
 )
-from backend.constants import (
-    MAX_COOKING_TIME, MAX_INGREDIENTS,
-    MIN_COOKING_TIME, MIN_INGREDIENTS, NAME_LENGTH)
+from users.constants import (NAME_LENGTH)
 
 from recipes.models import Recipe
 from users.models import Follow, User
