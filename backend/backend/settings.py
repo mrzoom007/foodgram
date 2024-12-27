@@ -63,7 +63,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-if os.getenv('USE_SQLITE'):
+if os.getenv('USE_SQLITE', 'True').lower() == 'true':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -128,9 +128,9 @@ DJOSER = {
         'user_list': ['rest_framework.permissions.IsAuthenticatedOrReadOnly'],
     },
     "SERIALIZERS": {
-        "user": "api.serializers.UserSerializer",
-        "user_create": "api.serializers.UserCreateSerializer",
-        "current_user": "api.serializers.UserSerializer",
+        "user": "api.users.serializers.UserSerializer",
+        "user_create": "api.users.serializers.UserCreateSerializer",
+        "current_user": "api.users.serializers.UserSerializer",
     },
 }
 

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from djoser.views import UserViewSet as DjoserViewSet
 
 from api.pagination import LimitPageNumberPagination
-from api.serializers import (
+from api.users.serializers import (
     FollowSerializer,
     AvatarSerializer, UserSerializer)
 

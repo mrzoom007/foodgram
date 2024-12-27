@@ -17,7 +17,7 @@ from api.pagination import LimitPageNumberPagination
 from api.permissions import IsOwnerOrReadOnly
 from api.recipes.serializers import (
     CropRecipeSerializer, IngredientSerializer,
-    TagSerializer, FollowSerializer,
+    TagSerializer,
     RecipeWriteSerializer, RecipeGetSerializer)
 from recipes.models import (
     ShoppingList, Favorite, Ingredient, IngredientInRecipe, Recipe, Tag

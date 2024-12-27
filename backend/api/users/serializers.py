@@ -11,10 +11,8 @@ from backend.constants import (
     MAX_COOKING_TIME, MAX_INGREDIENTS,
     MIN_COOKING_TIME, MIN_INGREDIENTS, NAME_LENGTH)
 
-from api.serializers import CropRecipeSerializer
 from recipes.models import Recipe
 from users.models import Follow, User
-
 
 
 class UserCreateSerializer(DjoserUserCreateSerializer):
@@ -64,6 +62,7 @@ class FollowSerializer(serializers.ModelSerializer):
         ).exists()
 
     def get_recipes(self, obj):
+        from api.recipes.serializers import CropRecipeSerializer
         request = self.context.get('request')
         limit = request.GET.get('recipes_limit')
         queryset = Recipe.objects.filter(author=obj.user)
