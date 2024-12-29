@@ -18,7 +18,6 @@ class AuthorAndTagFilter(FilterSet):
         method='filter_is_in_shopping_cart')
 
     def filter_is_favorited(self, queryset, name, value):
-        print(self.request.user)
         if value and not self.request.user.is_anonymous:
             return queryset.filter(favorites__user=self.request.user)
         return queryset
