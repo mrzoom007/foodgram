@@ -86,7 +86,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def delete_obj(self, model, user, pk):
         recipe = get_object_or_404(Recipe, id=pk)
         obj = get_object_or_404(model, user=user, recipe=recipe)
-        if obj.exists():
+        if obj:
             obj.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response({
