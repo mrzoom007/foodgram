@@ -52,7 +52,7 @@ class UserViewSet(DjoserViewSet):
                 'errors': 'Вы не можете отписываться от самого себя'
             }, status=status.HTTP_400_BAD_REQUEST)
         follow = get_object_or_404(Follow, subscriber=user, user=author)
-        if follow.exists():
+        if follow:
             follow.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
