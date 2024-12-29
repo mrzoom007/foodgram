@@ -79,7 +79,7 @@ class UserSerializer(DjoserUserSerializer):
         user = self.context.get('request').user
         if user.is_anonymous:
             return False
-        return user.subscription_author.filter(subscriber=obj).exists()
+        return user.subscribers.filter(user=obj).exists()
 
     class Meta:
         model = User

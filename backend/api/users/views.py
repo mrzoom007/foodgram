@@ -63,7 +63,7 @@ class UserViewSet(DjoserViewSet):
     @action(detail=False, permission_classes=[IsAuthenticated])
     def subscriptions(self, request):
         user = request.user
-        queryset = Follow.objects.filter(user=user)
+        queryset = Follow.objects.filter(subscriber=user)
         pages = self.paginate_queryset(queryset)
         serializer = FollowSerializer(
             pages,
